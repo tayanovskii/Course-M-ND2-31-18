@@ -15,16 +15,6 @@ namespace Students.Models
         public string LastName { get; set; }
         public DateTime CreateDateTime { get; set;}
 
-        public Student()
-        {
-
-        }
-        public Student(int id, string firstName, string lastName, DateTime dateTime)
-        {
-            CreateDateTime = dateTime;
-            FirstName = firstName;
-            Id = id;
-            LastName = lastName;
-        }
+       
     }
 }
