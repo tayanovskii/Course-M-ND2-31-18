@@ -1,0 +1,15 @@
+﻿@model Students.Models.Student
+
+@using (Html.BeginForm("Create", "Student", FormMethod.Post))
+{
+
+    <h2>@Html.DisplayNameForModel()</h2>
+    <div>
+        @Html.LabelFor(student => student.FirstName)
+        @Html.EditorFor(student => student.FirstName)
+        @Html.LabelFor(student => student.LastName)
+        @Html.EditorFor(student => student.LastName)
+        <button type="submit">Create</button>
+    </div>
+}
+
