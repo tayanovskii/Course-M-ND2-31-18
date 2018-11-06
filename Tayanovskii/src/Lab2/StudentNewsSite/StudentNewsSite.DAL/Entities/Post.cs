@@ -13,7 +13,7 @@ namespace StudentNewsSite.DAL.Entities
         public string Content { get; set; }
         public Student Author { get; set; }
         public DateTime Created { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual IEnumerable<Comment> Comments { get; set; }
+        public virtual IEnumerable<Tag> Tags { get; set; }
     }
 }

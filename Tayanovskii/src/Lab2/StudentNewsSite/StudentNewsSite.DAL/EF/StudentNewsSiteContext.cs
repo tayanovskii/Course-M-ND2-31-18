@@ -9,21 +9,30 @@ using StudentNewsSite.DAL.Entities;
 
 namespace StudentNewsSite.DAL.EF
 {
-    class StudentNewsSiteContext : DbContext
+    public class StudentNewsSiteContext : DbContext
     {
         static StudentNewsSiteContext()
         {
             System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseAlways<StudentNewsSiteContext>());
         }
 
-        public StudentNewsSiteContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        public StudentNewsSiteContext( ) : base("StudentNewsSiteDB")
         {
         }
 
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Post> Posts { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Tag> Tags { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            var student = modelBuilder.Entity<Student>();
+            student.HasKey(s => s.Id);
+            student.Property(s => s.FirstName).IsRequired().IsUnicode();
+            student.Property(s => s.LastName).IsRequired().IsUnicode();
+
+        }
+
+        public IDbSet<Student> Students { get; set; }
+        public IDbSet<Post> Posts { get; set; }
+        public IDbSet<Comment> Comments { get; set; }
+        public IDbSet<Tag> Tags { get; set; }
 
 
     }
