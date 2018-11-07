@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace StudentNewsSite.DAL.Entities
+namespace StudentNewsSite.Data.Entities
 {
     public class Student
     {

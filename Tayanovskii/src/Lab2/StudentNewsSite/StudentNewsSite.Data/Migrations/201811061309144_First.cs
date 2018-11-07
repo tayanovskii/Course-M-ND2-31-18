@@ -1,4 +1,4 @@
-namespace StudentNewsSite.DAL.Migrations
+namespace StudentNewsSite.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

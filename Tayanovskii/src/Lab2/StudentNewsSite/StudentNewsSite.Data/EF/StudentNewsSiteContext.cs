@@ -5,9 +5,9 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StudentNewsSite.DAL.Entities;
+using StudentNewsSite.Data.Entities;
 
-namespace StudentNewsSite.DAL.EF
+namespace StudentNewsSite.Data.EF
 {
     public class StudentNewsSiteContext : DbContext
     {
@@ -29,10 +29,10 @@ namespace StudentNewsSite.DAL.EF
 
         }
 
-        public IDbSet<Student> Students { get; set; }
-        public IDbSet<Post> Posts { get; set; }
-        public IDbSet<Comment> Comments { get; set; }
-        public IDbSet<Tag> Tags { get; set; }
+        public virtual IDbSet<Student> Students { get; set; }
+        public virtual IDbSet<Post> Posts { get; set; }
+        public virtual IDbSet<Comment> Comments { get; set; }
+        public virtual IDbSet<Tag> Tags { get; set; }
 
 
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentNewsSite.DAL.Entities
+namespace StudentNewsSite.Data.Entities
 {
     public class Tag
     {

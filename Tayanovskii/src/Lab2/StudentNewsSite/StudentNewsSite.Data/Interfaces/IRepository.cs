@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 
-namespace StudentNewsSite.DAL.Interfaces
+namespace StudentNewsSite.Data.Interfaces
 {
     public interface IRepository <T> where T: class
     {

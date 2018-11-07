@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using StudentNewsSite.DAL.EF;
-using StudentNewsSite.DAL.Entities;
-using StudentNewsSite.DAL.Interfaces;
+using StudentNewsSite.Data.EF;
+using StudentNewsSite.Data.Entities;
+using StudentNewsSite.Data.Interfaces;
 
-namespace StudentNewsSite.DAL.Repositories
+namespace StudentNewsSite.Data.Repositories
 {
     public class StudentRepository:IRepository<Student>
     {
-        private StudentNewsSiteContext dbContext;
+        private readonly StudentNewsSiteContext dbContext;
 
         public StudentRepository(StudentNewsSiteContext dbContext)
         {

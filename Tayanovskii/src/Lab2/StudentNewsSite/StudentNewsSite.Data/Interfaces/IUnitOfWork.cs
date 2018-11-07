@@ -1,7 +1,7 @@
 ﻿using System;
-using StudentNewsSite.DAL.Entities;
+using StudentNewsSite.Data.Entities;
 
-namespace StudentNewsSite.DAL.Interfaces
+namespace StudentNewsSite.Data.Interfaces
 {
     public interface IUnitOfWork: IDisposable
     {
