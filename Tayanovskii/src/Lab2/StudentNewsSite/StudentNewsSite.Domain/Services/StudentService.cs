@@ -29,6 +29,7 @@ namespace StudentNewsSite.BLL.Services
             var mapper = mapperConfiguration.CreateMapper();
             var newStudent = mapper.Map<StudentViewModel, Student>(studentViewModel);
             iUnitOfWork.Students.Create(newStudent);
+            iUnitOfWork.Save();
         }
 
 
