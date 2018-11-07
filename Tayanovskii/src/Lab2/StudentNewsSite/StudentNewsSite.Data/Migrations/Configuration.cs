@@ -1,4 +1,4 @@
-namespace StudentNewsSite.Data.Migrations
+namespace StudentNewsSite.DAL.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -9,7 +9,7 @@ namespace StudentNewsSite.Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(StudentNewsSite.Data.EF.StudentNewsSiteContext context)

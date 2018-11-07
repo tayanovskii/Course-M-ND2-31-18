@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentNewsSite", "StudentNewsSite\StudentNewsSite.csproj", "{99653CE7-D82C-4EE6-A61F-10077A54C14D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentNewsSite.Data", "StudentNewsSite.DAL\StudentNewsSite.Data.csproj", "{16D20C1C-F3F6-4A86-BADC-FE5352A71CD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentNewsSite.Data", "StudentNewsSite.Data\StudentNewsSite.Data.csproj", "{16D20C1C-F3F6-4A86-BADC-FE5352A71CD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentNewsSite.Domain", "StudentNewsSite.BLL\StudentNewsSite.Domain.csproj", "{246EF319-D5BB-44BB-B50A-455A5FA00B9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentNewsSite.Domain", "StudentNewsSite.Domain\StudentNewsSite.Domain.csproj", "{246EF319-D5BB-44BB-B50A-455A5FA00B9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

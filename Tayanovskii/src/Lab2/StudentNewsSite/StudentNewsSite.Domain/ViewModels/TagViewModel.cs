@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentNewsSite.Data.Entities
+namespace StudentNewsSite.Domain.ViewModels
 {
-    public class Tag
+    public class TagViewModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Post> Posts { get; set; }
+        public IEnumerable<PostViewModel> Posts { get; set; }
     }
 }

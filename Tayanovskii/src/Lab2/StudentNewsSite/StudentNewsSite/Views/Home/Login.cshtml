@@ -1,0 +1,22 @@
+﻿@model StudentNewsSite.Domain.ViewModels.StudentViewModel
+
+
+
+<h2>Home</h2>
+
+<h2>@Html.DisplayNameForModel()</h2>
+@ViewBag.Message
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+
+    <h2>@Html.DisplayNameForModel()</h2>
+    <div>
+        @Html.LabelFor(student => student.FirstName)
+        @Html.EditorFor(student => student.FirstName)
+        @Html.LabelFor(student => student.LastName)
+        @Html.EditorFor(student => student.LastName)
+        <button type="submit">Login</button>
+    </div>
+}
+<p></p>
+@Html.ActionLink("Registration", "Registration")

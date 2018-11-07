@@ -3,33 +3,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using StudentNewsSite.BLL.Services;
+using StudentNewsSite.Domain.ViewModels;
 
 namespace StudentNewsSite.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private StudentService studentService;
+       
+
+        public HomeController(StudentService studentService)
         {
-            
+            this.studentService = studentService;
         }
 
-        public ActionResult Index()
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(StudentViewModel studentViewModel)
+        {
+            if(studentService.CheckStudent(studentViewModel)) RedirectToAction("Post");
+
+            ViewBag.Message = "Student is not registered in this service";
+            return View();
+        }
+
+        public ActionResult Registration()
         {
             return View();
         }
 
-        public ActionResult About()
+        [HttpPost]
+        public ActionResult Registration(StudentViewModel studentViewModel)
         {
-            ViewBag.Message = "Your application description page.";
+            studentService.CreateStudent(studentViewModel);
+            return RedirectToAction("Login");
+        }
 
+        public ActionResult Post()
+        {
+            //studentService.CreateStudent(studentViewModel);
+            //return RedirectToAction("Post");
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
     }
 }

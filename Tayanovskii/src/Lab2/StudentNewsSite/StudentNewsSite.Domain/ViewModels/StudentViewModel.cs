@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace StudentNewsSite.Data.Entities
+
+namespace StudentNewsSite.Domain.ViewModels
 {
-    public class Student
+    public class StudentViewModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public virtual IEnumerable<Post> Posts { get; set; }
-        public virtual IEnumerable<Comment> Comments { get; set; }
+        public virtual IEnumerable<PostViewModel> Posts { get; set; }
+        public virtual IEnumerable<CommentViewModel> Comments { get; set; }
 
 
     }

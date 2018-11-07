@@ -4,13 +4,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using StudentNewsSite.BLL.ViewModels;
 
-namespace StudentNewsSite.Data.Entities
+namespace StudentNewsSite.Domain.ViewModels
 {
     public class PostViewModel
     {
-        public int Id { get; set; }
         public string Content { get; set; }
         public StudentViewModel Author { get; set; }
         public DateTime Created { get; set; }

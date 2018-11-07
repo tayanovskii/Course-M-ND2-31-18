@@ -11,9 +11,9 @@ namespace StudentNewsSite.Data.Entities
     {
         public int Id { get; set; }
         public string Content { get; set; }
-        public Student Author { get; set; }
-        public DateTime Created { get; set; }
-        public Post Post { get; set; }
+        public virtual Student Author { get; set; }
+        public virtual DateTime Created { get; set; }
+        public virtual Post Post { get; set; }
 
     }
 }
