@@ -1,0 +1,50 @@
+﻿@model Tuple<StudentNewsSite.Domain.ViewModels.StudentViewModel, IEnumerable<StudentNewsSite.Domain.ViewModels.PostViewModel>>
+
+@{
+    ViewBag.Title = "Posts";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<h2>Current Student:</h2>
+@Html.DisplayFor(model => model.Item1.FirstName)
+@Html.DisplayFor(model => model.Item1.LastName)
+
+<h2>Posts</h2>
+
+
+<table class="table">
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => Model.Item2.FirstOrDefault().Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => Model.Item2.FirstOrDefault().Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => Model.Item2.FirstOrDefault().Created)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Item2)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem =>item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.ActionLink("Read", "Read", Model.Item1) |
+                @Html.ActionLink("Edit", "Edit", Model.Item1) |
+                @Html.ActionLink("Delete", "Delete", Model.Item1)
+            </td>
+        </tr>
+    }
+</table>
+<p></p>
+@Html.ActionLink("Create new post", "Create", Model.Item1)

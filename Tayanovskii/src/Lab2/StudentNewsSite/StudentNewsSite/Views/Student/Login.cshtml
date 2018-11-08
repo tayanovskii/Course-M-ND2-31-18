@@ -1,12 +1,15 @@
 ﻿@model StudentNewsSite.Domain.ViewModels.StudentViewModel
 
 @{
-    ViewBag.Title = "Registration";
-    Layout =  "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Login";
+    Layout = "../Shared/_Layout.cshtml";
 }
 
-<h2>Registration</h2>
-@using (Html.BeginForm("Registration", "Home", FormMethod.Post))
+<h2>Home</h2>
+
+<h2>@Html.DisplayNameForModel()</h2>
+@ViewBag.Message
+@using (Html.BeginForm("Login", "Student", FormMethod.Post))
 {
 
     <h2>@Html.DisplayNameForModel()</h2>
@@ -15,6 +18,8 @@
         @Html.EditorFor(student => student.FirstName)
         @Html.LabelFor(student => student.LastName)
         @Html.EditorFor(student => student.LastName)
-        <button type="submit">Create</button>
+        <button type="submit">Login</button>
     </div>
 }
+<p></p>
+@Html.ActionLink("Registration", "Registration")

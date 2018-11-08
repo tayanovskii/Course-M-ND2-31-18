@@ -8,12 +8,12 @@ using StudentNewsSite.Domain.ViewModels;
 
 namespace StudentNewsSite.Controllers
 {
-    public class HomeController : Controller
+    public class StudentController : Controller
     {
         private StudentService studentService;
        
 
-        public HomeController(StudentService studentService)
+        public StudentController(StudentService studentService)
         {
             this.studentService = studentService;
         }
@@ -25,8 +25,7 @@ namespace StudentNewsSite.Controllers
         [HttpPost]
         public ActionResult Login(StudentViewModel studentViewModel)
         {
-            if(studentService.CheckStudent(studentViewModel)) RedirectToAction("Post");
-
+            if(studentService.CheckStudent(studentViewModel)) return RedirectToAction("Index","Post", studentViewModel);
             ViewBag.Message = "Student is not registered in this service";
             return View();
         }
@@ -40,16 +39,13 @@ namespace StudentNewsSite.Controllers
         public ActionResult Registration(StudentViewModel studentViewModel)
         {
             studentService.CreateStudent(studentViewModel);
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Post", studentViewModel);
         }
 
-        public ActionResult Post()
+        protected override void Dispose(bool disposing)
         {
-            //studentService.CreateStudent(studentViewModel);
-            //return RedirectToAction("Post");
-            return View();
+            studentService.Dispose();
+            base.Dispose(disposing);
         }
-
-
     }
 }
