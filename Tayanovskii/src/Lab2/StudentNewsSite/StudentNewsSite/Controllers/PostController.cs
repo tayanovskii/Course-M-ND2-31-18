@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using StudentNewsSite.BLL.Services;
+using StudentNewsSite.BLL.Interfaces;
 using StudentNewsSite.Domain.ViewModels;
 
 namespace StudentNewsSite.Controllers
 {
     public class PostController : Controller
     {
-        private PostService postService;
+        private IPostService postService;
 
-        public PostController(PostService post)
+        public PostController(IPostService post)
         {
             this.postService = post;
         }
@@ -20,20 +20,23 @@ namespace StudentNewsSite.Controllers
         // GET: Post
         public ActionResult Index(StudentViewModel currentStudent)
         {
+            this.Session["currentStudent"] = currentStudent;
             var modelTuple = new Tuple<StudentViewModel, IEnumerable<PostViewModel>>(currentStudent, postService.GetAllPosts());
             return View(modelTuple);
         }
 
-        public ActionResult Create(StudentViewModel currentStudent, PostViewModel postViewModel)
+        public ActionResult Create(StudentViewModel currentStudent)
         {
-            postViewModel.Author= currentStudent;
-            return View(postViewModel);
+            return View(new PostViewModel());
         }
         [HttpPost]
         public ActionResult Create(PostViewModel postViewModel)
         {
+            var currentStudent = Session["currentStudent"] as StudentViewModel;
+            postViewModel.Author = currentStudent;
             postService.Create(postViewModel);
-            return RedirectToAction("Index", "Post", postViewModel.Author);
+            //this.Session["currentStudent"] = null;
+            return RedirectToAction("Index", "Post", currentStudent);
         }
 
         protected override void Dispose(bool disposing)

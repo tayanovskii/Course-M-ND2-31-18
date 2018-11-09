@@ -2,10 +2,11 @@
 
 @{
     ViewBag.Title = "Registration";
-    Layout =  "../Shared/_Layout.cshtml";
+    Layout = "../Shared/_Layout.cshtml";
 }
 
 <h2>Registration</h2>
+@ViewBag.Message
 @using (Html.BeginForm("Registration", "Student", FormMethod.Post))
 {
 

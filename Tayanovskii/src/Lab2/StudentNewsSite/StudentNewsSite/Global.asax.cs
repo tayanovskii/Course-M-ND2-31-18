@@ -23,8 +23,10 @@ namespace StudentNewsSite
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 
+            NinjectModule studentModule = new StudentModule();
+            NinjectModule postModule= new PostModule();
             NinjectModule serviceModule = new ServiceModule();
-            var kernel = new StandardKernel(serviceModule);
+            var kernel = new StandardKernel(studentModule, postModule, serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
     }

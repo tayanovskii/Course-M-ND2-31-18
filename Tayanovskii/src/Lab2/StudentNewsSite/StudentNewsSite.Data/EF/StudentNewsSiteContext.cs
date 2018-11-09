@@ -13,7 +13,7 @@ namespace StudentNewsSite.Data.EF
     {
         static StudentNewsSiteContext()
         {
-            System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseIfModelChanges<StudentNewsSiteContext>());
+         Database.SetInitializer(new DropCreateDatabaseIfModelChanges<StudentNewsSiteContext>());
         }
 
         public StudentNewsSiteContext( ) : base("StudentNewsSiteDB")

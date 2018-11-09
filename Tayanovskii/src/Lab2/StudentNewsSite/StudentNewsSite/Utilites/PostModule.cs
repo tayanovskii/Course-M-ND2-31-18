@@ -4,11 +4,11 @@ using StudentNewsSite.BLL.Services;
 
 namespace StudentNewsSite.Utilites
 {
-    public class StudentModule : NinjectModule
+    public class PostModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<IStudentService>().To<StudentService>();
+            Bind<IPostService>().To<PostService>();
         }
     }
 }

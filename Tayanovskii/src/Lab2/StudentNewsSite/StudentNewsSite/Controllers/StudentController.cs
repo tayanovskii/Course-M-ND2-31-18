@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using StudentNewsSite.BLL.Services;
+using StudentNewsSite.BLL.Interfaces;
 using StudentNewsSite.Domain.ViewModels;
 
 namespace StudentNewsSite.Controllers
 {
     public class StudentController : Controller
     {
-        private StudentService studentService;
+        private IStudentService studentService;
        
 
-        public StudentController(StudentService studentService)
+        public StudentController(IStudentService studentService)
         {
             this.studentService = studentService;
         }
@@ -25,7 +25,8 @@ namespace StudentNewsSite.Controllers
         [HttpPost]
         public ActionResult Login(StudentViewModel studentViewModel)
         {
-            if(studentService.CheckStudent(studentViewModel)) return RedirectToAction("Index","Post", studentViewModel);
+            var currentStudentViewModel = studentService.Get(studentViewModel);
+            if(currentStudentViewModel!=null) return RedirectToAction("Index","Post", currentStudentViewModel);
             ViewBag.Message = "Student is not registered in this service";
             return View();
         }
@@ -38,8 +39,15 @@ namespace StudentNewsSite.Controllers
         [HttpPost]
         public ActionResult Registration(StudentViewModel studentViewModel)
         {
-            studentService.CreateStudent(studentViewModel);
-            return RedirectToAction("Index", "Post", studentViewModel);
+            var currentStudentViewModel = studentService.Get(studentViewModel);
+            if (currentStudentViewModel == null)
+            {
+                var idStudent = studentService.Create(studentViewModel);
+                var currentStudent = studentService.Get(idStudent);
+                return RedirectToAction("Index", "Post", currentStudent);
+            }
+            ViewBag.Message = "This student registered in service yet";
+            return View();
         }
 
         protected override void Dispose(bool disposing)

@@ -1,40 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
+using StudentNewsSite.BLL.Interfaces;
 using StudentNewsSite.Data.Entities;
 using StudentNewsSite.Data.Interfaces;
 using StudentNewsSite.Domain.ViewModels;
 
 namespace StudentNewsSite.BLL.Services
 {
-    public class PostService
+    public class PostService:IPostService
     {
-        private IUnitOfWork IUnitOfWork { get; set; }
+        private IUnitOfWork UnitOfWork { get;}
 
         public PostService(IUnitOfWork iOfWork)
         {
-            this.IUnitOfWork = iOfWork;
+            this.UnitOfWork = iOfWork;
         }
 
         public IEnumerable<PostViewModel> GetAllPosts()
         {
-            var mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Post, PostViewModel>());
+            var mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Post, PostViewModel>().ForMember(dest=>dest.Id,opt=>opt.MapFrom(source=>source.Id))
+                .ForMember(dest => dest.Content, opt => opt.MapFrom(source => source.Content))
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(source => source.Author))
+                .ForMember(dest => dest.Comments, opt => opt.MapFrom(source => source.Comments))
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(source => source.Tags)));
             var mapper = mapperConfiguration.CreateMapper();
-            return mapper.Map<IEnumerable<Post>, IEnumerable<PostViewModel>>(IUnitOfWork.Posts.GetAll());
+            var postViewModels = mapper.Map<IEnumerable<Post>, IEnumerable<PostViewModel>>(UnitOfWork.Posts.GetAll());
+            return postViewModels;
         }
 
         public void Create(PostViewModel postViewModel)
         {
             postViewModel.Created=DateTime.Now;
-            var mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<PostViewModel, Post>());
+            var mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<PostViewModel, Post>()
+                .ForMember(dest => dest.Content, opt => opt.MapFrom(source => source.Content))
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(source => source.Author))
+                .ForMember(dest => dest.Comments, opt => opt.MapFrom(source => source.Comments))
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(source => source.Tags)));
             var post = mapperConfiguration.CreateMapper().Map<PostViewModel, Post>(postViewModel);
-            IUnitOfWork.Posts.Create(post);
-            IUnitOfWork.Save();
+            UnitOfWork.Posts.Create(post);
+            UnitOfWork.Save();
         }
 
         public void Dispose()
         {
-            IUnitOfWork.Dispose();
+            UnitOfWork.Dispose();
         }
     }
 }

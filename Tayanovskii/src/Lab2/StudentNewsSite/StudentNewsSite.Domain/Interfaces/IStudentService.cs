@@ -4,6 +4,9 @@ namespace StudentNewsSite.BLL.Interfaces
 {
     public interface IStudentService
     {
-        StudentViewModel GetStudent(int id);
+        StudentViewModel Get(StudentViewModel studentViewModel);
+        int Create(StudentViewModel studentViewModel);
+        StudentViewModel Get(int id);
+        void Dispose();
     }
 }
