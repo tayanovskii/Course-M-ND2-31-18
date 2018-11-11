@@ -44,7 +44,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EF\StudentNewsSiteContext.cs" />
+    <Compile Include="Contexts\StudentNewsSiteContext.cs" />
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\Post.cs" />
     <Compile Include="Entities\Student.cs" />

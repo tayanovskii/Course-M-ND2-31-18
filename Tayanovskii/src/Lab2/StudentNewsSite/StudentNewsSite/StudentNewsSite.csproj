@@ -172,10 +172,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilites\CommentModule.cs" />
-    <Compile Include="Utilites\TagModule.cs" />
-    <Compile Include="Utilites\PostModule.cs" />
-    <Compile Include="Utilites\StudentModule.cs" />
+    <Compile Include="Modules\CommentModule.cs" />
+    <Compile Include="Modules\TagModule.cs" />
+    <Compile Include="Modules\PostModule.cs" />
+    <Compile Include="Modules\StudentModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -244,7 +244,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Student\Login.cshtml" />
     <Content Include="Views\Student\Registration.cshtml" />
-    <Content Include="Views\Post\Create_old.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -259,10 +258,11 @@
     <Content Include="Views\Post\Create.cshtml" />
     <Content Include="Views\Post\Read.cshtml" />
     <Content Include="Views\Comment\Create.cshtml" />
+    <Content Include="Views\Post\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

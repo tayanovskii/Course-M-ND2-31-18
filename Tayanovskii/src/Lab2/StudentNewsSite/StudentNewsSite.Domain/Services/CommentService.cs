@@ -18,7 +18,6 @@ namespace StudentNewsSite.BLL.Services
             Mapper = mapper;
             UnitOfWork = unitOfWork;
         }
-
         public void Create(CommentViewModel commentViewModel)
         {
             commentViewModel.Created=DateTime.Now;
@@ -26,7 +25,6 @@ namespace StudentNewsSite.BLL.Services
             UnitOfWork.Comments.Create(newComment);
             UnitOfWork.Save();
         }
-
         public CommentViewModel Get(int id)
         {
             var comment = UnitOfWork.Comments.Get(id);

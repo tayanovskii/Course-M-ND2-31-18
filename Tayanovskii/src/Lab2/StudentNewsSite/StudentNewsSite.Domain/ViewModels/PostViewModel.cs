@@ -10,7 +10,7 @@ namespace StudentNewsSite.Domain.ViewModels
     public class PostViewModel
     {
         public int Id { get; set; }
-        public string Content { get; set; }
+        public virtual string Content { get; set; }
         public int AuthorId { get; set; }
         public virtual StudentViewModel Author { get; set; }
         public DateTime Created { get; set; }

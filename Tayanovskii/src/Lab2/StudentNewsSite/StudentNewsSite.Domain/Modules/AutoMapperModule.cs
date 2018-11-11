@@ -31,7 +31,8 @@ namespace StudentNewsSite.BLL.Modules
                     .ForMember(dest => dest.LastName, opt => opt.MapFrom(source => source.LastName))
                     .ForAllOtherMembers(e => e.Ignore());
 
-                config.CreateMap<Post, PostViewModel>().ForMember(dest => dest.Id, opt => opt.MapFrom(source => source.Id))
+                config.CreateMap<Post, PostViewModel>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(source => source.Id))
                     .ForMember(dest => dest.Content, opt => opt.MapFrom(source => source.Content))
                     .ForMember(dest => dest.Author, opt => opt.MapFrom(source => source.Author))
                     .ForMember(dest => dest.Comments, opt => opt.MapFrom(source => source.Comments))
@@ -43,12 +44,24 @@ namespace StudentNewsSite.BLL.Modules
                     .ForMember(dest => dest.Comments, opt => opt.MapFrom(source => source.Comments))
                     .ForMember(dest => dest.Tags, opt => opt.MapFrom(source => source.Tags));
 
+                config.CreateMap<PostViewModel, CreatePostViewModel>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(source => source.Id))
+                    .ForMember(dest => dest.Content, opt => opt.MapFrom(source => source.Content))
+                    .ForMember(dest => dest.Author, opt => opt.MapFrom(source => source.Author))
+                    .ForMember(dest => dest.AuthorId, opt => opt.MapFrom(source => source.AuthorId))
+                    .ForMember(dest => dest.Created, opt => opt.MapFrom(source => source.Created))
+                    .ForAllOtherMembers(e => e.Ignore());
+
                 config.CreateMap<TagViewModel, Tag>()
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(source => source.Name))
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(source => source.Id))
+                    .ForMember(dest => dest.Posts, opt => opt.MapFrom(source => source.Posts))
                     .ForAllOtherMembers(e => e.Ignore());
 
                 config.CreateMap<Tag, TagViewModel>()
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(source => source.Name))
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(source => source.Id))
+                    .ForMember(dest => dest.Posts, opt => opt.MapFrom(source => source.Posts))
                     .ForAllOtherMembers(e=>e.Ignore());
 
                 config.CreateMap<CommentViewModel, Comment>()

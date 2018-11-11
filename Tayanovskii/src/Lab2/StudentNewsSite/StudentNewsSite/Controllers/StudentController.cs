@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using StudentNewsSite.BLL.Interfaces;
 using StudentNewsSite.Domain.ViewModels;
 
@@ -10,8 +6,8 @@ namespace StudentNewsSite.Controllers
 {
     public class StudentController : Controller
     {
-        private IStudentService studentService;
-       
+        private readonly IStudentService studentService;
+
 
         public StudentController(IStudentService studentService)
         {
@@ -22,15 +18,17 @@ namespace StudentNewsSite.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Login(StudentViewModel studentViewModel)
         {
             var currentStudentViewModel = studentService.Get(studentViewModel);
             if (currentStudentViewModel != null)
             {
-                this.Session["currentStudent"] = currentStudentViewModel;
-                return RedirectToAction("Index","Post");
+                Session["currentStudent"] = currentStudentViewModel;
+                return RedirectToAction("Index", "Post");
             }
+
             ViewBag.Message = "Student is not registered in this service";
             return View();
         }
@@ -48,9 +46,10 @@ namespace StudentNewsSite.Controllers
             {
                 var idStudent = studentService.Create(studentViewModel);
                 var currentStudent = studentService.Get(idStudent);
-                this.Session["currentStudent"] = currentStudent;
+                Session["currentStudent"] = currentStudent;
                 return RedirectToAction("Index", "Post");
             }
+
             ViewBag.Message = "This student registered in service yet";
             return View();
         }

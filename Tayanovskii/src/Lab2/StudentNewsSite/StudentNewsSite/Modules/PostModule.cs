@@ -2,7 +2,7 @@
 using StudentNewsSite.BLL.Interfaces;
 using StudentNewsSite.BLL.Services;
 
-namespace StudentNewsSite.Utilites
+namespace StudentNewsSite.Modules
 {
     public class PostModule : NinjectModule
     {

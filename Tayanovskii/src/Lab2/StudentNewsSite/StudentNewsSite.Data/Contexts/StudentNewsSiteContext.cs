@@ -1,8 +1,7 @@
 ﻿using System.Data.Entity;
-using System.Linq;
 using StudentNewsSite.Data.Entities;
 
-namespace StudentNewsSite.Data.EF
+namespace StudentNewsSite.DAL.Contexts
 {
     public class StudentNewsSiteContext : DbContext
     {
@@ -10,11 +9,9 @@ namespace StudentNewsSite.Data.EF
         {
          Database.SetInitializer(new DropCreateDatabaseIfModelChanges<StudentNewsSiteContext>());
         }
-
         public StudentNewsSiteContext( ) : base("StudentNewsSiteDB")
         {
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             var student = modelBuilder.Entity<Student>();
@@ -31,7 +28,7 @@ namespace StudentNewsSite.Data.EF
             var post = modelBuilder.Entity<Post>();
             post.HasKey(p => p.Id);
             post.Property(p => p.Content).IsRequired().IsUnicode();
-            post.Property(p => p.Created).IsRequired().HasColumnType("datetime");
+            post.Property(p => p.Created).IsRequired().HasColumnType("datetime2");
             post.HasMany(p => p.Comments).WithRequired(c => c.Post).HasForeignKey(c => c.PostId);
             post.HasMany(p => p.Tags).WithMany(t => t.Posts).Map(c =>
             {
@@ -47,7 +44,7 @@ namespace StudentNewsSite.Data.EF
             var comment = modelBuilder.Entity<Comment>();
             comment.HasKey(c => c.Id);
             comment.Property(c => c.Content).IsRequired().IsUnicode();
-            comment.Property(c => c.Created).IsRequired().HasColumnType("datetime");
+            comment.Property(c => c.Created).IsRequired().HasColumnType("datetime2");
 
         }
 

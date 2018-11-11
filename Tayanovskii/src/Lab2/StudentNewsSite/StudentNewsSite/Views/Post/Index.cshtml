@@ -44,14 +44,17 @@
                 @Html.DisplayFor(modelItem => item.Created)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Tags)
+                @foreach (var tag in item.Tags)
+                {
+                    @Html.DisplayFor(t=>tag.Name)
+                }
             </td>
             <td>
                 @Html.ActionLink(" Read ", "Read", new { id = item.Id })
                 @{
                     if (item.Author.Id == Model.Item1.Id)
                     {
-                        @Html.ActionLink(" Edit ", "Edit", item)
+                        @Html.ActionLink(" Edit ", "Edit", new { id = item.Id })
                         @Html.ActionLink(" Delete ", "Delete", new { id = item.Id })
                     }
                 }

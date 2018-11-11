@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using StudentNewsSite.BLL.Interfaces;
 using StudentNewsSite.Domain.ViewModels;
@@ -10,18 +8,18 @@ namespace StudentNewsSite.Controllers
 {
     public class PostController : Controller
     {
-        private IPostService postService;
+        private readonly IPostService postService;
 
         public PostController(IPostService post)
         {
-            this.postService = post;
+            postService = post;
         }
 
-        // GET: Post
         public ActionResult Index()
         {
             var currentStudent = Session["currentStudent"] as StudentViewModel;
-            var modelTuple = new Tuple<StudentViewModel, IEnumerable<PostViewModel>>(currentStudent, postService.GetAllPosts());
+            var modelTuple =
+                new Tuple<StudentViewModel, IEnumerable<PostViewModel>>(currentStudent, postService.GetAllPosts());
             return View(modelTuple);
         }
 
@@ -29,6 +27,7 @@ namespace StudentNewsSite.Controllers
         {
             return View(new CreatePostViewModel());
         }
+
         [HttpPost]
         public ActionResult Create(CreatePostViewModel createPostViewModel)
         {
@@ -36,14 +35,12 @@ namespace StudentNewsSite.Controllers
             createPostViewModel.AuthorId = currentStudent.Id;
             postService.Create(createPostViewModel);
             return RedirectToAction("Index", "Post", currentStudent);
-
         }
 
         public ActionResult Delete(int id)
         {
             postService.Delete(id);
             return RedirectToAction("Index", "Post");
-
         }
 
         public ActionResult Read(int id)
@@ -52,13 +49,19 @@ namespace StudentNewsSite.Controllers
             return View(postViewModel);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var postViewModel = postService.Get(id);
+            return View(postViewModel);
+        }
+
+        [HttpPost]
         public ActionResult Edit(PostViewModel postViewModel)
         {
-            var currentStudent = Session["currentStudent"] as StudentViewModel;
             postService.Edit(postViewModel);
-            return RedirectToAction("Index", "Post", currentStudent);
-
+            return RedirectToAction("Index", "Post");
         }
+
         protected override void Dispose(bool disposing)
         {
             postService.Dispose();

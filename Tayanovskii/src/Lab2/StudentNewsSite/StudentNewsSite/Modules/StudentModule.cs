@@ -2,13 +2,13 @@
 using StudentNewsSite.BLL.Interfaces;
 using StudentNewsSite.BLL.Services;
 
-namespace StudentNewsSite.Utilites
+namespace StudentNewsSite.Modules
 {
-    public class TagModule : NinjectModule
+    public class StudentModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<ITagService>().To<TagService>();
+            Bind<IStudentService>().To<StudentService>();
         }
     }
 }

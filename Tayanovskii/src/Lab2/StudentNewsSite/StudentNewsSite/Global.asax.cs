@@ -10,7 +10,7 @@ using Ninject.Modules;
 using Ninject.Web.Mvc;
 using StudentNewsSite.BLL;
 using StudentNewsSite.BLL.Modules;
-using StudentNewsSite.Utilites;
+using StudentNewsSite.Modules;
 
 namespace StudentNewsSite
 {

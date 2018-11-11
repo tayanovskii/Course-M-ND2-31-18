@@ -1,7 +1,7 @@
 ﻿using System;
-using StudentNewsSite.Data.EF;
 using StudentNewsSite.Data.Entities;
 using StudentNewsSite.Data.Interfaces;
+using StudentNewsSite.DAL.Contexts;
 
 namespace StudentNewsSite.Data.Repositories
 {

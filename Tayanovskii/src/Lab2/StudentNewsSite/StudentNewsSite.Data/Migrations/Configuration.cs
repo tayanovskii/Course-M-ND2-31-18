@@ -1,3 +1,5 @@
+using StudentNewsSite.DAL.Contexts;
+
 namespace StudentNewsSite.DAL.Migrations
 {
     using System;
@@ -5,14 +7,14 @@ namespace StudentNewsSite.DAL.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<StudentNewsSite.Data.EF.StudentNewsSiteContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<StudentNewsSiteContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(StudentNewsSite.Data.EF.StudentNewsSiteContext context)
+        protected override void Seed(StudentNewsSiteContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -20,21 +20,11 @@ namespace StudentNewsSite.BLL.Services
             UnitOfWork = iOfWork;
             Mapper = mapper;
         }
-
         public IEnumerable<PostViewModel> GetAllPosts()
         {
             var postViewModels = Mapper.Map<IEnumerable<Post>, IEnumerable<PostViewModel>>(UnitOfWork.Posts.GetAll());
             return postViewModels;
         }
-
-        //public void Create(PostViewModel postViewModel)
-        //{
-        //    postViewModel.Created=DateTime.Now;
-        //    var post = Mapper.Map<PostViewModel, Post>(postViewModel);
-        //    UnitOfWork.Posts.Create(post);
-        //    UnitOfWork.Save();
-        //}
-
         public void Create(CreatePostViewModel createPostViewModel)
         {
             var tags = createPostViewModel.Tags.Split(new []{','},options: StringSplitOptions.RemoveEmptyEntries);
@@ -47,10 +37,10 @@ namespace StudentNewsSite.BLL.Services
             };
             foreach (var tag in tags)
             {
-                newPostViewModel.Tags.Add(new TagViewModel { Name = tag });
+                newPostViewModel.Tags.Add(new TagViewModel { Name = tag.Trim() });
             }
             var newPostEntity = Mapper.Map<PostViewModel, Post>(source: newPostViewModel);
-            UnitOfWork.Posts.Create(item: newPostEntity);
+            UnitOfWork.Posts.Create(newPostEntity);
             UnitOfWork.Save();
         }
         public PostViewModel Get(int id)
@@ -59,20 +49,27 @@ namespace StudentNewsSite.BLL.Services
             var postViewModel = Mapper.Map<Post, PostViewModel>(post);
             return postViewModel;
         }
-
+        public CreatePostViewModel Get(PostViewModel postViewModel)
+        {
+            var listTags = postViewModel.Tags.Select(model => model.Name);
+            var tagsString = string.Join(",", listTags);
+            var createPostViewModel = Mapper.Map<PostViewModel,CreatePostViewModel>(postViewModel);
+            createPostViewModel.Tags = tagsString;
+            return createPostViewModel;
+        }
         public void Edit(PostViewModel postViewModel)
         {
-            var editPost = Mapper.Map<PostViewModel, Post>(postViewModel);
+            var newViewModel = Get(postViewModel.Id);
+            newViewModel.Content = postViewModel.Content;
+            var editPost = Mapper.Map<PostViewModel, Post>(newViewModel);
             UnitOfWork.Posts.Update(editPost);
             UnitOfWork.Save();
         }
-
         public void Delete(int id)
         {
             UnitOfWork.Posts.Delete(id);
             UnitOfWork.Save();
         }
-
         public void Dispose()
         {
             UnitOfWork.Dispose();
