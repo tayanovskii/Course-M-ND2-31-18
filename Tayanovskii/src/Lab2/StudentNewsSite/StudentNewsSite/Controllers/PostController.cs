@@ -18,27 +18,47 @@ namespace StudentNewsSite.Controllers
         }
 
         // GET: Post
-        public ActionResult Index(StudentViewModel currentStudent)
+        public ActionResult Index()
         {
-            this.Session["currentStudent"] = currentStudent;
+            var currentStudent = Session["currentStudent"] as StudentViewModel;
             var modelTuple = new Tuple<StudentViewModel, IEnumerable<PostViewModel>>(currentStudent, postService.GetAllPosts());
             return View(modelTuple);
         }
 
-        public ActionResult Create(StudentViewModel currentStudent)
+        public ActionResult Create()
         {
-            return View(new PostViewModel());
+            return View(new CreatePostViewModel());
         }
         [HttpPost]
-        public ActionResult Create(PostViewModel postViewModel)
+        public ActionResult Create(CreatePostViewModel createPostViewModel)
         {
             var currentStudent = Session["currentStudent"] as StudentViewModel;
-            postViewModel.Author = currentStudent;
-            postService.Create(postViewModel);
-            //this.Session["currentStudent"] = null;
+            createPostViewModel.AuthorId = currentStudent.Id;
+            postService.Create(createPostViewModel);
             return RedirectToAction("Index", "Post", currentStudent);
+
         }
 
+        public ActionResult Delete(int id)
+        {
+            postService.Delete(id);
+            return RedirectToAction("Index", "Post");
+
+        }
+
+        public ActionResult Read(int id)
+        {
+            var postViewModel = postService.Get(id);
+            return View(postViewModel);
+        }
+
+        public ActionResult Edit(PostViewModel postViewModel)
+        {
+            var currentStudent = Session["currentStudent"] as StudentViewModel;
+            postService.Edit(postViewModel);
+            return RedirectToAction("Index", "Post", currentStudent);
+
+        }
         protected override void Dispose(bool disposing)
         {
             postService.Dispose();

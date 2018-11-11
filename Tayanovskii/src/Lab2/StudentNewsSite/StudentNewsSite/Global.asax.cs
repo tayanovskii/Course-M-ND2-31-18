@@ -9,6 +9,7 @@ using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
 using StudentNewsSite.BLL;
+using StudentNewsSite.BLL.Modules;
 using StudentNewsSite.Utilites;
 
 namespace StudentNewsSite
@@ -22,11 +23,13 @@ namespace StudentNewsSite
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-
             NinjectModule studentModule = new StudentModule();
-            NinjectModule postModule= new PostModule();
+            NinjectModule postModule = new PostModule();
             NinjectModule serviceModule = new ServiceModule();
-            var kernel = new StandardKernel(studentModule, postModule, serviceModule);
+            NinjectModule tagModule = new TagModule();
+            NinjectModule commentModule = new CommentModule();
+            NinjectModule autoMapper = new AutoMapperModule();
+            var kernel = new StandardKernel(studentModule,postModule,serviceModule,tagModule,commentModule,autoMapper);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
     }

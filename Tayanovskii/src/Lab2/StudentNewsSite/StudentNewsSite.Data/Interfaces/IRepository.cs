@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
+using StudentNewsSite.Data.Entities;
 
 namespace StudentNewsSite.Data.Interfaces
 {

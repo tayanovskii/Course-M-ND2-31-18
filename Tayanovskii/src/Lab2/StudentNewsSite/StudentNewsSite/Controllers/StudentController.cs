@@ -26,7 +26,11 @@ namespace StudentNewsSite.Controllers
         public ActionResult Login(StudentViewModel studentViewModel)
         {
             var currentStudentViewModel = studentService.Get(studentViewModel);
-            if(currentStudentViewModel!=null) return RedirectToAction("Index","Post", currentStudentViewModel);
+            if (currentStudentViewModel != null)
+            {
+                this.Session["currentStudent"] = currentStudentViewModel;
+                return RedirectToAction("Index","Post");
+            }
             ViewBag.Message = "Student is not registered in this service";
             return View();
         }
@@ -44,7 +48,8 @@ namespace StudentNewsSite.Controllers
             {
                 var idStudent = studentService.Create(studentViewModel);
                 var currentStudent = studentService.Get(idStudent);
-                return RedirectToAction("Index", "Post", currentStudent);
+                this.Session["currentStudent"] = currentStudent;
+                return RedirectToAction("Index", "Post");
             }
             ViewBag.Message = "This student registered in service yet";
             return View();

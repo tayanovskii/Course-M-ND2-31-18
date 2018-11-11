@@ -11,9 +11,10 @@ namespace StudentNewsSite.Domain.ViewModels
     {
         public int Id { get; set; }
         public string Content { get; set; }
+        public int AuthorId { get; set; }
         public virtual StudentViewModel Author { get; set; }
         public DateTime Created { get; set; }
-        public virtual IEnumerable<CommentViewModel> Comments { get; set; }
-        public virtual IEnumerable<TagViewModel> Tags { get; set; }
+        public virtual ICollection<CommentViewModel> Comments { get; set; }
+        public virtual ICollection<TagViewModel> Tags { get; set; }
     }
 }

@@ -1,0 +1,16 @@
+﻿@model StudentNewsSite.Domain.ViewModels.TagViewModel
+
+@{
+    ViewBag.Title = "Create Tag";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<h2>Create Tag</h2>
+@using (Html.BeginForm("Create", "Tag", FormMethod.Post))
+{
+    <div>
+        @Html.LabelFor(tag => tag.Name)
+        @Html.EditorFor(tag => tag.Name)
+        <button type="submit">Create</button>
+    </div>
+}

@@ -10,58 +10,39 @@ namespace StudentNewsSite.BLL.Services
 {
     public class StudentService:IStudentService
     {
-        IUnitOfWork UnitOfWork { get; set; }
+        private IUnitOfWork UnitOfWork { get; }
+        private IMapper Mapper { get; }
 
-        public StudentService(IUnitOfWork iUnitOfWork)
+        public StudentService(IUnitOfWork iUnitOfWork, IMapper mapper)
         {
-            this.UnitOfWork = iUnitOfWork;
+            UnitOfWork = iUnitOfWork;
+            Mapper = mapper;
         }
-
         public StudentViewModel Get(StudentViewModel studentViewModel)
         {
-
             var currentStudent = UnitOfWork.Students
                 .Find(s => s.FirstName == studentViewModel.FirstName && s.LastName == studentViewModel.LastName)
                 .FirstOrDefault();
-            if (currentStudent != null)
-            {
-                var currentStudentViewModel = this.Get(currentStudent.Id);
-                return currentStudentViewModel;
-            }
-            return null;
+            if (currentStudent == null) return null;
+            var currentStudentViewModel = Get(currentStudent.Id);
+            return currentStudentViewModel;
         }
-
         public int Create(StudentViewModel studentViewModel)
         {
-
-            var mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<StudentViewModel, Student>()
-                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(source => source.Id))
-                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(source => source.FirstName))
-                .ForMember(dest => dest.LastName, opt => opt.MapFrom(source => source.LastName)));
-            var mapper = mapperConfiguration.CreateMapper();
-            var newStudent = mapper.Map<StudentViewModel, Student>(studentViewModel);
+            var newStudent = Mapper.Map<StudentViewModel, Student>(studentViewModel);
             UnitOfWork.Students.Create(newStudent);
             UnitOfWork.Save();
             return newStudent.Id;
         }
-
         public StudentViewModel Get(int id)
         {
             var studentEntity = UnitOfWork.Students.Get(id);
-            var mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Student, StudentViewModel>()
-                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(source => source.Id))
-                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(source => source.FirstName))
-                .ForMember(dest => dest.LastName, opt => opt.MapFrom(source => source.LastName)));
-            var mapper = mapperConfiguration.CreateMapper();
-            var getStudentViewModel = mapper.Map<Student,StudentViewModel>(studentEntity);
+            var getStudentViewModel = Mapper.Map<Student,StudentViewModel>(studentEntity);
             return getStudentViewModel;
         }
-
         public void Dispose()
         {
             UnitOfWork.Dispose();
         }
-
-
     }
 }

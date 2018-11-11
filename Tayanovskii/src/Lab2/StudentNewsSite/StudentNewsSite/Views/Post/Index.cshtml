@@ -1,20 +1,20 @@
 ﻿@model Tuple<StudentNewsSite.Domain.ViewModels.StudentViewModel, IEnumerable<StudentNewsSite.Domain.ViewModels.PostViewModel>>
 
 @{
-    ViewBag.Title = "Posts";
-    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Current Student:</h2>
-@Html.DisplayFor(model => model.Item1.Id)
+<h2>Index</h2>
+
+<h3>Current Student:</h3>
 @Html.DisplayFor(model => model.Item1.FirstName)
 @Html.DisplayFor(model => model.Item1.LastName)
 
-<h2>Posts</h2>
-
-
+<p>
+    @Html.ActionLink("Create New", "Create", Model.Item1)
+</p>
 <table class="table">
-
     <tr>
         <th>
             @Html.DisplayNameFor(model => Model.Item2.FirstOrDefault().Content)
@@ -25,6 +25,9 @@
         <th>
             @Html.DisplayNameFor(model => Model.Item2.FirstOrDefault().Created)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => Model.Item2.FirstOrDefault().Tags)
+        </th>
     </tr>
 
     @foreach (var item in Model.Item2)
@@ -34,7 +37,6 @@
                 @Html.DisplayFor(modelItem => item.Content)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Author.Id)
                 @Html.DisplayFor(modelItem => item.Author.FirstName)
                 @Html.DisplayFor(modelItem => item.Author.LastName)
             </td>
@@ -42,18 +44,19 @@
                 @Html.DisplayFor(modelItem => item.Created)
             </td>
             <td>
-                @Html.ActionLink("Read", "Read", item) |
+                @Html.DisplayFor(modelItem => item.Tags)
+            </td>
+            <td>
+                @Html.ActionLink(" Read ", "Read", new { id = item.Id })
                 @{
-                    if (item.Author == Model.Item1)
+                    if (item.Author.Id == Model.Item1.Id)
                     {
-                        @Html.ActionLink("Edit", "Edit", item)
-                        @Html.ActionLink("Delete", "Delete", item)
+                        @Html.ActionLink(" Edit ", "Edit", item)
+                        @Html.ActionLink(" Delete ", "Delete", new { id = item.Id })
                     }
                 }
-
             </td>
         </tr>
     }
+
 </table>
-<p></p>
-@Html.ActionLink("Create new post", "Create", Model.Item1)

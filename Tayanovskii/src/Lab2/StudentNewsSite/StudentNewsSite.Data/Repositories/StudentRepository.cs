@@ -47,5 +47,6 @@ namespace StudentNewsSite.Data.Repositories
         {
             return dbContext.Students.Where(predicate);
         }
+
     }
 }

@@ -9,6 +9,5 @@ namespace StudentNewsSite.Domain.ViewModels
     public class TagViewModel
     {
         public string Name { get; set; }
-        public virtual IEnumerable<PostViewModel> Posts { get; set; }
     }
 }

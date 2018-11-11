@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics.Contracts;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StudentNewsSite.Data.Entities;
 
 namespace StudentNewsSite.Data.EF
@@ -26,11 +21,24 @@ namespace StudentNewsSite.Data.EF
             student.HasKey(s => s.Id);
             student.Property(s => s.FirstName).IsRequired().IsUnicode();
             student.Property(s => s.LastName).IsRequired().IsUnicode();
+            student.HasMany(s => s.Posts)
+                .WithRequired(p => p.Author)
+                .HasForeignKey(p => p.AuthorId).WillCascadeOnDelete(false);
+            student.HasMany(s => s.Comments)
+                .WithRequired(c => c.Author)
+                .HasForeignKey(c => c.AuthorId).WillCascadeOnDelete(false);
 
             var post = modelBuilder.Entity<Post>();
             post.HasKey(p => p.Id);
             post.Property(p => p.Content).IsRequired().IsUnicode();
             post.Property(p => p.Created).IsRequired().HasColumnType("datetime");
+            post.HasMany(p => p.Comments).WithRequired(c => c.Post).HasForeignKey(c => c.PostId);
+            post.HasMany(p => p.Tags).WithMany(t => t.Posts).Map(c =>
+            {
+                c.MapLeftKey("PostId");
+                c.MapRightKey("TagId");
+                c.ToTable("PostTag");
+            });
 
             var tag = modelBuilder.Entity<Tag>();
             tag.HasKey(t => t.Id);

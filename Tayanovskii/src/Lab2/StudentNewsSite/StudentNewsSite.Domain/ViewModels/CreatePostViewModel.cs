@@ -5,16 +5,15 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentNewsSite.Data.Entities
+namespace StudentNewsSite.Domain.ViewModels
 {
-    public class Post
+    public class CreatePostViewModel
     {
         public int Id { get; set; }
         public string Content { get; set; }
         public int AuthorId { get; set; }
-        public virtual Student Author { get; set; }
+        public virtual StudentViewModel Author { get; set; }
         public DateTime Created { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+        public string Tags { get; set; }
     }
 }

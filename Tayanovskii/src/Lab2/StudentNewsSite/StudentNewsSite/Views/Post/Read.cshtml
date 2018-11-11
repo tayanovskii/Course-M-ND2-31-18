@@ -1,0 +1,65 @@
+﻿@model StudentNewsSite.Domain.ViewModels.PostViewModel
+
+@{
+    ViewBag.Title = "Read";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Read</h2>
+
+<div>
+    <h4>PostViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author.FirstName)
+            @Html.DisplayFor(model => model.Author.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+        @foreach (var tag in Model.Tags)
+        {
+            <dd>
+                @Html.DisplayFor(c => tag.Name)
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        @foreach (var comment in Model.Comments)
+        {
+        <dd>
+            @Html.DisplayFor(c => comment.Content)
+            @Html.DisplayFor(c => comment.Author.FirstName)
+            @Html.DisplayFor(c => comment.Author.LastName)
+            @Html.DisplayFor(c => comment.Created)
+        </dd>
+        }
+    </dl>
+</div>
+@Html.ActionLink(linkText:"Add comment",actionName:"Create", controllerName:"Comment", routeValues: new {id = Model.Id}, htmlAttributes: null)
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
