@@ -13,16 +13,6 @@ namespace DependencyInjection.DI
             Types = new Dictionary<Type, Type>();
             TypeInstances = new Dictionary<Type, object>();
         }
-
-        //static DIContainer(IDictionary<Type, Type> types, IDictionary<Type, object> typeInstances)
-       // {
-       //     types = new Dictionary<Type, Type>();
-       //     typeInstances = new Dictionary<Type, object>();
-       // }
-
-        //private readonly IDictionary<Type, Type> types = new Dictionary<Type, Type>();
-        //private readonly IDictionary<Type, object> typeInstances = new Dictionary<Type, object>();
-
         public void Register<TContract, TImplementation>()
         {
             Types[typeof(TContract)] = typeof(TImplementation);
