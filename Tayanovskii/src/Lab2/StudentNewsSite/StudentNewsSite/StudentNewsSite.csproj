@@ -258,6 +258,7 @@
     <Content Include="Views\Post\Create.cshtml" />
     <Content Include="Views\Post\Read.cshtml" />
     <Content Include="Views\Comment\Create.cshtml" />
+    <Content Include="Views\Post\Edit_old.cshtml" />
     <Content Include="Views\Post\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>

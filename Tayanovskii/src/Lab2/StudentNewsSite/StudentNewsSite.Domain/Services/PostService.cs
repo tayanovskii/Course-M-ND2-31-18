@@ -57,11 +57,19 @@ namespace StudentNewsSite.BLL.Services
             createPostViewModel.Tags = tagsString;
             return createPostViewModel;
         }
-        public void Edit(PostViewModel postViewModel)
+        public void Edit(CreatePostViewModel createPostViewModel)
         {
-            var newViewModel = Get(postViewModel.Id);
-            newViewModel.Content = postViewModel.Content;
-            var editPost = Mapper.Map<PostViewModel, Post>(newViewModel);
+            var editPost = UnitOfWork.Posts.Get(createPostViewModel.Id);
+            editPost.Content = createPostViewModel.Content;
+            var tags = createPostViewModel.Tags.Split(new[] { ',' }, options: StringSplitOptions.RemoveEmptyEntries);
+            foreach (var tag in tags)
+            {
+                if (editPost.Tags.Any(t => t.Name == tag.Trim())) continue;
+                var newTag = new Tag() { Name= tag.Trim()};
+                UnitOfWork.Tags.Create(newTag);
+                editPost.Tags.Add(newTag);
+            }
+
             UnitOfWork.Posts.Update(editPost);
             UnitOfWork.Save();
         }

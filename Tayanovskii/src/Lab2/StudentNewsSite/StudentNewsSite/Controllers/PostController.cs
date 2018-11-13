@@ -49,16 +49,30 @@ namespace StudentNewsSite.Controllers
             return View(postViewModel);
         }
 
+        //public ActionResult Edit(int id)
+        //{
+        //    var postViewModel = postService.Get(id);
+        //    return View(postViewModel);
+        //}
+
+        //[HttpPost]
+        //public ActionResult Edit(PostViewModel postViewModel)
+        //{
+        //    postService.Edit(postViewModel);
+        //    return RedirectToAction("Index", "Post");
+        //}
+
         public ActionResult Edit(int id)
         {
             var postViewModel = postService.Get(id);
-            return View(postViewModel);
+            var createPostViewModel = postService.Get(postViewModel);
+            return View(createPostViewModel);
         }
 
         [HttpPost]
-        public ActionResult Edit(PostViewModel postViewModel)
+        public ActionResult Edit(CreatePostViewModel createPostViewModel)
         {
-            postService.Edit(postViewModel);
+            postService.Edit(createPostViewModel);
             return RedirectToAction("Index", "Post");
         }
 

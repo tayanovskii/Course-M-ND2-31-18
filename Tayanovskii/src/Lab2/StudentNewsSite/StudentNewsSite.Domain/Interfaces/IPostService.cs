@@ -9,7 +9,7 @@ namespace StudentNewsSite.BLL.Interfaces
         void Create(CreatePostViewModel createPostViewModel);
         PostViewModel Get(int id);
         CreatePostViewModel Get(PostViewModel postViewModel);
-        void Edit(PostViewModel postViewModel);
+        void Edit(CreatePostViewModel createPostViewModel);
         void Delete(int id);
         void Dispose();
     }
