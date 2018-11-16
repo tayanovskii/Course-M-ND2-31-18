@@ -1,4 +1,4 @@
-﻿@model Twitter.Models.Post
+﻿@model Twitter.Models.PostViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -9,7 +9,7 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Post</h4>
+    <h4>PostViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -28,7 +28,7 @@
             @Html.DisplayNameFor(model => model.Author)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Author.Id)
+            @Html.DisplayFor(model => model.Author.UserName)
         </dd>
     </dl>
     

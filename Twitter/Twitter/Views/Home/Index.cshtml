@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Twitter.Models.Post>
+﻿@using System.Security.Claims
+@model IEnumerable<Twitter.Models.PostViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -35,13 +36,19 @@
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Author.Id)
+                @Html.DisplayFor(modelItem => item.Author.UserName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @{
+                    if (item.AuthorId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id"> Edit </a> 
+                        <a asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+                    }
+                }
             </td>
+               
+           
         </tr>
 }
     </tbody>

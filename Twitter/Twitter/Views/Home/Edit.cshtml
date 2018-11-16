@@ -1,4 +1,4 @@
-﻿@model Twitter.Models.Post
+﻿@model Twitter.Models.PostViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,7 +7,7 @@
 
 <h2>Edit</h2>
 
-<h4>Post</h4>
+<h4>PostViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,13 +21,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="CreatedTime" class="control-label"></label>
-                <input asp-for="CreatedTime" class="form-control" />
-                <span asp-validation-for="CreatedTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AuthorId" class="control-label"></label>
-                <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
-                <span asp-validation-for="AuthorId" class="text-danger"></span>
+                <input readonly asp-for="CreatedTime" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

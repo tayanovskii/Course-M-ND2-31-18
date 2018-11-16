@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Twitter.Data;
+using Twitter.Data.Entities;
+using Twitter.Data.Repositories;
 using Twitter.Models;
+using Twitter.Repositories;
 using Twitter.Services;
 
 namespace Twitter
@@ -35,7 +39,10 @@ namespace Twitter
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
+       
+            services.AddScoped<IRepository<Post>, PostRepository>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddAutoMapper();
             services.AddMvc();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,99 +9,74 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Twitter.Data;
 using Twitter.Models;
+using Twitter.Services;
 
 namespace Twitter.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IPostService postService;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(IPostService postService)
         {
-            _context = context;
+            this.postService = postService;
         }
 
-        // GET: HomeController1
+        // GET: PostViewModels
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Posts.Include(p => p.Author);
-            return View(await applicationDbContext.ToListAsync());
+            var allPosts = postService.GetLastPostsAsync(20);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return View(await allPosts);
         }
 
-        // GET: HomeController1/Details/5
-        [Authorize]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var post = await _context.Posts
-                .Include(p => p.Author)
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return View(post);
-        }
-
-        // GET: HomeController1/Create
+        // GET: PostViewModels/Create
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: HomeController1/Create
+        // POST: PostViewModels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Content,CreatedTime,AuthorId")] Post post)
+        public async Task<IActionResult> Create([Bind("Id,Content")] PostViewModel postViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(post);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
-            return View(post);
+            if (!ModelState.IsValid) return View(postViewModel);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            postViewModel.AuthorId = userId;
+            await postService.Create(postViewModel);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: HomeController1/Edit/5
-        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var post = await _context.Posts.SingleOrDefaultAsync(m => m.Id == id);
-            if (post == null)
+            var postViewModel = await postService.Get(id.Value);
+            if (postViewModel == null)
             {
                 return NotFound();
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
-            return View(post);
+            return View(postViewModel);
         }
 
-        // POST: HomeController1/Edit/5
+        // POST: PostViewModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Content,CreatedTime,AuthorId")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Content")] PostViewModel postViewModel)
         {
-            if (id != post.Id)
+            if (id != postViewModel.Id)
             {
                 return NotFound();
             }
@@ -109,27 +85,22 @@ namespace Twitter.Controllers
             {
                 try
                 {
-                    _context.Update(post);
-                    await _context.SaveChangesAsync();
+                    await postService.Edit(postViewModel);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostExists(post.Id))
+                    if (postService.Get(postViewModel.Id)==null)
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
-            return View(post);
+            return View(postViewModel);
         }
 
-        // GET: HomeController1/Delete/5
+        // GET: PostViewModels/Delete/5
         [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -138,32 +109,31 @@ namespace Twitter.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts
-                .Include(p => p.Author)
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (post == null)
+            var postViewModel = await postService.Get(id.Value);
+            if (postViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(postViewModel);
         }
 
-        // POST: HomeController1/Delete/5
-        [Authorize]
+        // POST: PostViewModels/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var post = await _context.Posts.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Posts.Remove(post);
-            await _context.SaveChangesAsync();
+            await postService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PostExists(int id)
+
+        protected override void Dispose(bool disposing)
         {
-            return _context.Posts.Any(e => e.Id == id);
+            postService.Dispose();
+            base.Dispose(disposing);
         }
     }
+
 }
