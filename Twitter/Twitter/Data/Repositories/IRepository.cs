@@ -16,7 +16,7 @@ namespace Twitter.Data.Repositories
             Task CreateAsync(T item);
             Task UpdateAsync(T item);
             Task DeleteAsync(int id);
-            Task<IEnumerable<T>> Find(Expression<Func<Post, bool>> predicate);
+            Task<IEnumerable<T>> FindAsync(Expression<Func<Post, bool>> predicate);
             void Dispose();
         }
 }

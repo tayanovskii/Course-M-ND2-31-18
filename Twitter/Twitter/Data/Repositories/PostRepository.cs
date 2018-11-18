@@ -30,7 +30,7 @@ namespace Twitter.Repositories
 
         public async Task<IEnumerable<Post>> GetLastAsync(int count)
         {
-            return await dbContext.Posts.TakeLast(20).Include(post => post.Author).ToListAsync();
+            return await dbContext.Posts.Include(post => post.Author).TakeLast(count).ToListAsync();
         }
 
         public async Task<Post> GetByIdAsync(int id)
@@ -61,7 +61,7 @@ namespace Twitter.Repositories
                 await dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Post>> Find(Expression<Func<Post, bool>> predicate)
+        public async Task<IEnumerable<Post>> FindAsync(Expression<Func<Post, bool>> predicate)
         {
                 return await dbContext.Posts.Where(predicate).ToListAsync();
         }

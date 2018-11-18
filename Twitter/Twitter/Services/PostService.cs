@@ -22,7 +22,7 @@ namespace Twitter.Services
             this.postRepository = postRepository;
         }
 
-        public async Task<IEnumerable<PostViewModel>> GetAllPosts()
+        public async Task<IEnumerable<PostViewModel>> GetAllPostsAsync()
         {
             var allPosts = await postRepository.GetAllAsync();
             var postViewModels = mapper.Map<IEnumerable<PostViewModel>>(allPosts);
@@ -36,28 +36,28 @@ namespace Twitter.Services
             return postViewModels;
         }
 
-        public async Task Create(PostViewModel postViewModel)
+        public async Task CreateAsync(PostViewModel postViewModel)
         {
             postViewModel.CreatedTime = DateTime.Now;
             var post = mapper.Map<Post>(postViewModel);
             await postRepository.CreateAsync(post);
         }
 
-        public async Task<PostViewModel> Get(int id)
+        public async Task<PostViewModel> GetAsync(int id)
         {
             var post = await postRepository.GetByIdAsync(id);
             var postViewModel = mapper.Map<PostViewModel>(post);
             return postViewModel;
         }
 
-        public async Task Edit(PostViewModel postViewModel)
+        public async Task EditAsync(PostViewModel postViewModel)
         {
             var editPost = await postRepository.GetByIdAsync(postViewModel.Id);
             editPost.Content = postViewModel.Content;
             await postRepository.UpdateAsync(editPost);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             await postRepository.DeleteAsync(id);
         }

@@ -50,7 +50,7 @@ namespace Twitter.Controllers
             if (!ModelState.IsValid) return View(postViewModel);
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             postViewModel.AuthorId = userId;
-            await postService.Create(postViewModel);
+            await postService.CreateAsync(postViewModel);
             return RedirectToAction(nameof(Index));
         }
 
@@ -60,7 +60,7 @@ namespace Twitter.Controllers
             {
                 return NotFound();
             }
-            var postViewModel = await postService.Get(id.Value);
+            var postViewModel = await postService.GetAsync(id.Value);
             if (postViewModel == null)
             {
                 return NotFound();
@@ -85,11 +85,11 @@ namespace Twitter.Controllers
             {
                 try
                 {
-                    await postService.Edit(postViewModel);
+                    await postService.EditAsync(postViewModel);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (postService.Get(postViewModel.Id)==null)
+                    if (postService.GetAsync(postViewModel.Id)==null)
                     {
                         return NotFound();
                     }
@@ -109,7 +109,7 @@ namespace Twitter.Controllers
                 return NotFound();
             }
 
-            var postViewModel = await postService.Get(id.Value);
+            var postViewModel = await postService.GetAsync(id.Value);
             if (postViewModel == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace Twitter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await postService.Delete(id);
+            await postService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 

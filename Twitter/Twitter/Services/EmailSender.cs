@@ -24,7 +24,7 @@ namespace Twitter.Services
             using (var client = new SmtpClient())
             {
                 await client.ConnectAsync("smtp.yandex.ru", 25, false);
-                await client.AuthenticateAsync("account.tayan@yandex.ru", "p2406118");
+                await client.AuthenticateAsync("admin@yandex.ru", "123456789");
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }
