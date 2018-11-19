@@ -12,8 +12,15 @@ namespace Twitter.AutoMapperProfiles
     {
         public PostProfile()
         {
-            CreateMap<Post, PostViewModel>();
-            CreateMap<PostViewModel, Post>();
+
+            CreateMap<Post, PostViewModel>()
+                .ForMember(dest => dest.Author, expression => expression.MapFrom(source => source.Author))
+                .ForMember(dest => dest.AuthorId, expression => expression.MapFrom(source => source.AuthorId))
+                .ForMember(dest => dest.Content, expression => expression.MapFrom(source => source.Content))
+                .ForMember(dest => dest.CreatedTime, expression => expression.MapFrom(source => source.CreatedTime))
+                .ForMember(dest => dest.Id, expression => expression.MapFrom(source => source.Id))
+                .ReverseMap();
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Twitter.Data;
@@ -31,7 +32,8 @@ namespace Twitter.Services
 
         public async Task<IEnumerable<PostViewModel>> GetLastPostsAsync(int count)
         {
-            var lastPosts = await postRepository.GetLastAsync(20);
+            var listPosts = await GetAllPostsAsync();
+            var lastPosts = listPosts.TakeLast(count);
             var postViewModels = mapper.Map<IEnumerable<PostViewModel>>(lastPosts);
             return postViewModels;
         }

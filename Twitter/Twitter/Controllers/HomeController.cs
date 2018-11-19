@@ -27,8 +27,6 @@ namespace Twitter.Controllers
         public async Task<IActionResult> Index()
         {
             var allPosts = postService.GetLastPostsAsync(20);
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             return View(await allPosts);
         }
 

@@ -28,11 +28,6 @@ namespace Twitter.Repositories
                 return await dbContext.Posts.Include(post => post.Author).ToListAsync();
         }
 
-        public async Task<IEnumerable<Post>> GetLastAsync(int count)
-        {
-            return await dbContext.Posts.Include(post => post.Author).TakeLast(count).ToListAsync();
-        }
-
         public async Task<Post> GetByIdAsync(int id)
         {
                 return await dbContext.Posts.Include(post => post.Author).FirstOrDefaultAsync(post => post.Id == id);
@@ -40,7 +35,6 @@ namespace Twitter.Repositories
 
         public async Task CreateAsync(Post item)
         {
-
                 await dbContext.Posts.AddAsync(item);
                 await dbContext.SaveChangesAsync();
         }
