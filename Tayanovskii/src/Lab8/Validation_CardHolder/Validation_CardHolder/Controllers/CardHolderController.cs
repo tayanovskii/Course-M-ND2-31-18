@@ -32,7 +32,6 @@ namespace Validation_CardHolder.Controllers
         {
             if (!ModelState.IsValid)
             { 
-                // re-render the view when validation failed.
                 return View("Create", cardHolderViewModel);
             }
             _cardHoldersList.Add(cardHolderViewModel);

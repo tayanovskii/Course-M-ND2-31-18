@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Validation_CardHolder.Validations;
 
 namespace Validation_CardHolder.Models
 {
@@ -17,8 +18,10 @@ namespace Validation_CardHolder.Models
         public string Email { get; set; }
         public decimal Amount { get; set; }
         public string Description { get; set; }
+        [CreditCardNumber]
         public string CreditCardNumber { get; set; }
         public int ExpirationMonth { get; set; }
+        [ExpirationDate(nameof(ExpirationMonth))]
         public int ExpirationYear { get; set; }
         public string SecurityCode { get; set; }
     }

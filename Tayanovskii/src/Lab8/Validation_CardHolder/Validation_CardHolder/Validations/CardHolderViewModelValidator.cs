@@ -27,11 +27,11 @@ namespace Validation_CardHolder.Validations
             RuleFor(model => model.Email).NotEmpty().EmailAddress();
             RuleFor(model => model.Amount).InclusiveBetween((decimal)0.01, (decimal)99999.99).SetValidator(new ScalePrecisionValidator(2, 7));
             RuleFor(model => model.Description).Length(0, 250);
-            RuleFor(model => model.CreditCardNumber).CreditCard();
+            //RuleFor(model => model.CreditCardNumber).CreditCard();
             RuleFor(model => model.ExpirationMonth).InclusiveBetween(1, 12);
-            RuleFor(model => model.ExpirationYear).InclusiveBetween(DateTime.Now.Year, 2999);
-            When(model => model.ExpirationYear.Equals(DateTime.Now.Year), () =>
-                RuleFor(model => model.ExpirationMonth).InclusiveBetween(DateTime.Now.Month,12));
+            //RuleFor(model => model.ExpirationYear).InclusiveBetween(DateTime.Now.Year, 2999);
+            //When(model => model.ExpirationYear.Equals(DateTime.Now.Year), () =>
+            //    RuleFor(model => model.ExpirationMonth).InclusiveBetween(DateTime.Now.Month,12));
             RuleFor(model => model.SecurityCode).NotEmpty().Matches(_regexSecurityCode);
         }
 
