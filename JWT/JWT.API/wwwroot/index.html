@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>JWT в ASP.NET Core Web API</title>
+</head>
+<body>
+<div id="postContainer"></div>
+
+<input id="createPostContent" type="text" />
+<input id="createPost" type="button" value="Create Post"/>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+<script>
+    $("#createPost").click(function () {
+        $.ajax({
+            type: 'POST',
+            data: { content: $("#createPostContent").val() },
+            url: 'http://localhost:59202/api/post',
+            success: function (posts) {
+                document.location.href = document.location.href;
+            },
+            fail: function (data) {
+                console.log(data);
+            }
+        });
+    });
+    $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:59202/api/post',
+            success: function (posts) {
+                var container = $("#postContainer");
+                posts.forEach(function (item) {
+                    container.append('<div class="post">' + item.content + '</div>');
+                });
+            },
+            fail: function (data) {
+                console.log(data);
+            }
+        });
+    });
+</script>
+</body>
+</html>
