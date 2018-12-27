@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using JWT.API.Helpers;
@@ -32,7 +33,6 @@ namespace JWT.API.Controllers
             {
                 Response.StatusCode = 400;
                 await Response.WriteAsync("Invalid username or password.");
-                return;
             }
 
             var now = DateTime.UtcNow;
@@ -54,7 +54,6 @@ namespace JWT.API.Controllers
 
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
-            Redirect("http://localhost:59202/index.html");
         }
 
         private ClaimsIdentity GetIdentity(string username, string password)

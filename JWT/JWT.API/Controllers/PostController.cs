@@ -12,17 +12,18 @@ using Microsoft.EntityFrameworkCore;
 namespace JWT.API.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [Authorize]
     [ApiController]
     public class PostController : ControllerBase
     {
         private readonly PostContext _context;
-        private readonly IHubContext<PostHub> _hubContext;
+        //private readonly IHubContext<PostHub> _hubContext;
 
         public PostController(PostContext context, IHubContext<PostHub> hubContext)
         {
             _context = context;
-            _hubContext = hubContext;
+            //_hubContext = hubContext;
         }
 
         // GET: api/Post
@@ -88,16 +89,14 @@ namespace JWT.API.Controllers
 
         // POST: api/Post
         [HttpPost]
-        public async Task<IActionResult> PostPost([FromBody] Post post)
+        public async Task<IActionResult> PostPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            //_context.Post.Add(post);
-            //await _context.SaveChangesAsync();
-            await _hubContext.Clients.AllExcept(HttpContext.Connection.Id).SendAsync("addpost", post.Content);
+            var content = Request.Form["content"];
+            var post = new Post() { Content = content };
+        
+            _context.Post.Add(post);
+            await _context.SaveChangesAsync();
+            // await _hubContext.Clients.All.SendAsync("addpost", post.Content);
 
             return CreatedAtAction("GetPost", new { id = post.Id }, post);
         }

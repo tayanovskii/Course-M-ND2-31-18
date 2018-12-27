@@ -11,7 +11,7 @@ namespace JWT.API.Helpers
     {
         public const string Issuer = "MyAuthServer";
         public const string Audience = "http://localhost:59202/";
-        const string Key = "secret_key777";
+        const string Key = "my_very_secret_key777";
         public const int Lifetime = 3;
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {

@@ -45,6 +45,7 @@ namespace JWT.API
                         ValidateIssuerSigningKey = true,
                     };
                 });
+            services.AddSignalR();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -59,23 +60,28 @@ namespace JWT.API
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
 
+            DefaultFilesOptions options = new DefaultFilesOptions();
+            options.DefaultFileNames.Clear();
+            options.DefaultFileNames.Add("login.html");
+            app.UseDefaultFiles(options);
+            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();
 
-            //app.UseStatusCodePages(async context => {
-            //    var request = context.HttpContext.Request;
-            //    var response = context.HttpContext.Response;
 
-            //    if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
-            //        // you may also check requests path to do this only for specific methods       
-            //        // && request.Path.Value.StartsWith("/specificPath")
-            //    {
-            //        response.Redirect("/account/login");
-            //    }
-            //});
+            app.UseStatusCodePages(async context =>
+            {
+                var request = context.HttpContext.Request;
+                var response = context.HttpContext.Response;
+                var path = request.Path.Value ?? "";
+
+                if (response.StatusCode == (int) HttpStatusCode.Unauthorized &&
+                    path.StartsWith("/api", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    response.Redirect("http: //localhost:59202/login.html");
+                }
+            });
         }
     }
 }

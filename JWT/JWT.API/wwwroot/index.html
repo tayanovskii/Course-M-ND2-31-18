@@ -16,9 +16,13 @@
     $("#createPost").click(function () {
         $.ajax({
             type: 'POST',
-            data: { content: $("#createPostContent").val() },
             url: 'http://localhost:59202/api/post',
-            success: function (posts) {
+            data: { content: $("#createPostContent").val() },
+            beforeSend: function (xhr) {
+                var token = sessionStorage.accessToken;
+                            xhr.setRequestHeader("Authorization", "Bearer " + token);
+                        },
+            success: function (post) {
                 document.location.href = document.location.href;
             },
             fail: function (data) {
@@ -30,6 +34,10 @@
         $.ajax({
             type: 'GET',
             url: 'http://localhost:59202/api/post',
+            beforeSend: function (xhr) {
+                var token = sessionStorage.accessToken;
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            },
             success: function (posts) {
                 var container = $("#postContainer");
                 posts.forEach(function (item) {
